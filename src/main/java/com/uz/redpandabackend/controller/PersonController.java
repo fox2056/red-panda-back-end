@@ -1,5 +1,7 @@
-package com.uz.redpandabackend;
+package com.uz.redpandabackend.controller;
 
+import com.uz.redpandabackend.DataLoader;
+import com.uz.redpandabackend.model.Person;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.stereotype.Controller;

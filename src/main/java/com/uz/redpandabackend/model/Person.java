@@ -1,4 +1,4 @@
-package com.uz.redpandabackend;
+package com.uz.redpandabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -2,6 +2,7 @@ package com.uz.redpandabackend;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.uz.redpandabackend.model.Person;
 
 import java.io.File;
 import java.io.IOException;
