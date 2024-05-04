@@ -2,10 +2,12 @@ package com.uz.redpandabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.time.LocalTime;
+
 public record TimeSlot(
         @JsonProperty("start_time")
-        String startTime,
+        LocalTime startTime,
         @JsonProperty("end_time")
-        String endTime
+        LocalTime endTime
 ) {
 }
