@@ -11,9 +11,4 @@ public class RedPandaBackEndApplication {
         SpringApplication.run(RedPandaBackEndApplication.class, args);
     }
 
-    @Bean
-    public DataLoader dataLoader() {
-        return new DataLoader();
-    }
-
 }

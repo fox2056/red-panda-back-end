@@ -8,7 +8,7 @@ group = 'com.packt'
 version = '0.0.1-SNAPSHOT'
 
 java {
-    sourceCompatibility = '22'
+    sourceCompatibility = '21'
 }
 
 repositories {
@@ -17,6 +17,10 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
+    implementation 'com.graphql-java-kickstart:graphql-java-tools:13.1.1'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework:spring-webflux'

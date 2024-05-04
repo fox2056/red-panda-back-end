@@ -1,17 +1,24 @@
 package com.uz.redpandabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
+@Document(collection = "schedule_app")
 public record Person(
-        @JsonProperty("_id")
+        @Id
+        @Field("_id")
         String id,
-        @JsonProperty("first_name")
+
+        @Field("first_name")
         String firstName,
-        @JsonProperty("last_name")
+
+        @Field("last_name")
         String lastName,
-        @JsonProperty("work_schedule")
+
+        @Field("work_schedule")
         List<Event> workSchedule
-) {
-}
+) {}

@@ -15,7 +15,14 @@ type Person {
     workSchedule: [Event!]!
 }
 
+type TimeSlot {
+    startTime: String!
+    endTime: String!
+}
+
+
 type Query {
     allPersons: [Person]
     personById(id: ID!): Person
+    findCommonFreeTimeSlots(person1Id: ID!, person2Id: ID!, date: String!): [TimeSlot]
 }

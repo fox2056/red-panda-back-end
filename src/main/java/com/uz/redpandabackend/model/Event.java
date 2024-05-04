@@ -1,17 +1,23 @@
 package com.uz.redpandabackend.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 public record Event(
         String date,
         String day,
-        @JsonProperty("start_time")
+
+        @Field("start_time")
         String startTime,
-        @JsonProperty("end_time")
+
+        @Field("end_time")
         String endTime,
+
         String subject,
-        @JsonProperty("class_type")
+
+        @Field("class_type")
         String classType,
+
         String room
 ) {
 }
