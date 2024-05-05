@@ -7,11 +7,20 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.util.List;
 
-@Document(collection = "schedule_app")
+@Document(collection = "lecturers")
 public record Person(
         @Id
         @Field("_id")
         String id,
+
+        @Field
+        String email,
+
+        @Field
+        String login,
+
+        @Field
+        String password,
 
         @Field("first_name")
         String firstName,
