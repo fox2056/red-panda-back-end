@@ -1,4 +1,5 @@
 type Event {
+    id: ID
     date: String!
     day: String!
     startTime: String!
@@ -28,4 +29,19 @@ type Query {
     allPersons: [Person]
     personById(id: ID!): Person
     findCommonFreeTimeSlots(person1Id: ID!, person2Id: ID!, date: String!): [TimeSlot]
+}
+
+type Mutation {
+    createEvent(personId: ID!, eventInput: EventInput!): Event
+    deleteEvent(personId: ID!, eventId: ID!): Boolean
+}
+
+input EventInput {
+    date: String!
+    day: String!
+    startTime: String!
+    endTime: String!
+    subject: String!
+    classType: String!
+    room: String!
 }

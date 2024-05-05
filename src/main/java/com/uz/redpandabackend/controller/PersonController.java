@@ -31,7 +31,6 @@ public class PersonController {
         if (person == null) {
             System.out.println("No person found with id " + id);
         }
-        System.out.println(person);
         return person;
     }
 

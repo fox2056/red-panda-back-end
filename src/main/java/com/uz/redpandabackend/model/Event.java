@@ -1,9 +1,13 @@
 package com.uz.redpandabackend.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public record Event(
+
+        @Id
+        String id,
+
         String date,
         String day,
 
