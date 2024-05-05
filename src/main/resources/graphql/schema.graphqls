@@ -12,6 +12,9 @@ type Person {
     id: ID!
     firstName: String!
     lastName: String!
+    email: String!
+    login: String!
+    password: String!
     workSchedule: [Event!]!
 }
 
