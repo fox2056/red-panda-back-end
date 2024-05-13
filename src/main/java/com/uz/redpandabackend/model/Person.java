@@ -10,17 +10,10 @@ import java.util.List;
 @Document(collection = "lecturers")
 public record Person(
         @Id
-        @Field("_id")
         String id,
 
         @Field
         String email,
-
-        @Field
-        String login,
-
-        @Field
-        String password,
 
         @Field("first_name")
         String firstName,

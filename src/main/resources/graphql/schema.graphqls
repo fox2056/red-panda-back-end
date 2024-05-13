@@ -1,5 +1,4 @@
 type Event {
-    id: ID
     date: String!
     day: String!
     startTime: String!
@@ -14,8 +13,6 @@ type Person {
     firstName: String!
     lastName: String!
     email: String!
-    login: String!
-    password: String!
     workSchedule: [Event!]!
 }
 
@@ -27,21 +24,10 @@ type TimeSlot {
 
 type Query {
     allPersons: [Person]
-    personById(id: ID!): Person
-    findCommonFreeTimeSlots(person1Id: ID!, person2Id: ID!, date: String!): [TimeSlot]
-}
-
-type Mutation {
-    createEvent(personId: ID!, eventInput: EventInput!): Event
-    deleteEvent(personId: ID!, eventId: ID!): Boolean
-}
-
-input EventInput {
-    date: String!
-    day: String!
-    startTime: String!
-    endTime: String!
-    subject: String!
-    classType: String!
-    room: String!
+    findCommonFreeTimeSlots(
+        date: String!,
+        hourFrom: String!,
+        hourTo: String!,
+        personIds: [ID!]!
+    ): [TimeSlot]
 }

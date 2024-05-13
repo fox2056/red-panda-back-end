@@ -5,9 +5,6 @@ import org.springframework.data.mongodb.core.mapping.Field;
 
 public record Event(
 
-        @Id
-        String id,
-
         String date,
         String day,
 

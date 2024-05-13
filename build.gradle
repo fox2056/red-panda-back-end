@@ -19,6 +19,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-graphql'
     implementation 'com.graphql-java-kickstart:graphql-java-tools:13.1.1'
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.mnode.ical4j:ical4j:4.0.0-rc6'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'org.springframework.boot:spring-boot-starter-web'

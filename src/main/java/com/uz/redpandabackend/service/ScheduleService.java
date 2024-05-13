@@ -9,10 +9,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScheduleService {
+
+    private LocalTime startOfDay;
+    private LocalTime endOfDay;
 
     private static final Logger logger = LoggerFactory.getLogger(ScheduleService.class);
 
@@ -21,21 +26,33 @@ public class ScheduleService {
         return LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm"));
     }
 
-    public List<TimeSlot> findCommonFreeTimeSlots(List<Event> eventsPerson1, List<Event> eventsPerson2) {
+    public List<TimeSlot> findCommonFreeTimeSlots(String hourFrom, String hourTo, List<List<Event>> events) {
+        String[] hourFromTablicaString = hourFrom.split(":");
+        if (hourFromTablicaString.length != 2) {
+            hourFromTablicaString[0] = "0";
+            hourFromTablicaString[1] = "0";
+        }
+        startOfDay = LocalTime.of(Integer.parseInt(hourFromTablicaString[0]), Integer.parseInt(hourFromTablicaString[1]));
 
-        logger.debug("Finding free time slots for events person 1: {}", eventsPerson1);
+        String[] hourToTablicaString = hourTo.split(":"); // Poprawiono na hourTo
+        if (hourToTablicaString.length != 2) {
+            hourToTablicaString[0] = "23";
+            hourToTablicaString[1] = "59";
+        }
+        endOfDay = LocalTime.of(Integer.parseInt(hourToTablicaString[0]), Integer.parseInt(hourToTablicaString[1]));
 
-        logger.debug("Finding free time slots for events person 2: {}", eventsPerson2);
+        System.out.println(startOfDay);
+        System.out.println(endOfDay);
 
-        List<TimeSlot> freeTimeSlots1 = findFreeTimeSlots(eventsPerson1);
-        List<TimeSlot> freeTimeSlots2 = findFreeTimeSlots(eventsPerson2);
+        List<List<TimeSlot>> allFreeTimeSlots = events.stream()
+                .map(this::findFreeTimeSlots)
+                .collect(Collectors.toList());
 
-        return findCommonTimeSlots(freeTimeSlots1, freeTimeSlots2);
+        return findCommonTimeSlots(allFreeTimeSlots);
     }
 
     private List<TimeSlot> findFreeTimeSlots(List<Event> events) {
-        LocalTime startOfDay = LocalTime.MIN;
-        LocalTime endOfDay = LocalTime.of(23, 59);
+
         List<TimeSlot> freeTimeSlots = new ArrayList<>();
         freeTimeSlots.add(new TimeSlot(startOfDay, endOfDay));
 
@@ -62,16 +79,28 @@ public class ScheduleService {
         return freeTimeSlots;
     }
 
-    private List<TimeSlot> findCommonTimeSlots(List<TimeSlot> slots1, List<TimeSlot> slots2) {
-        List<TimeSlot> commonSlots = new ArrayList<>();
+    private List<TimeSlot> findCommonTimeSlots(List<List<TimeSlot>> allFreeTimeSlots) {
+        if (allFreeTimeSlots.isEmpty()) return Collections.emptyList();
 
-        for (TimeSlot slot1 : slots1) {
-            for (TimeSlot slot2 : slots2) {
-                LocalTime latestStart = slot1.startTime().isAfter(slot2.startTime()) ? slot1.startTime() : slot2.startTime();
-                LocalTime earliestEnd = slot1.endTime().isBefore(slot2.endTime()) ? slot1.endTime() : slot2.endTime();
-                if (latestStart.isBefore(earliestEnd)) {
-                    commonSlots.add(new TimeSlot(latestStart, earliestEnd));
+        List<TimeSlot> commonSlots = new ArrayList<>(allFreeTimeSlots.get(0));
+
+        for (int i = 1; i < allFreeTimeSlots.size(); i++) {
+            List<TimeSlot> currentSlots = allFreeTimeSlots.get(i);
+            List<TimeSlot> newCommonSlots = new ArrayList<>();
+
+            for (TimeSlot commonSlot : commonSlots) {
+                for (TimeSlot currentSlot : currentSlots) {
+                    LocalTime latestStart = commonSlot.startTime().isAfter(currentSlot.startTime()) ? commonSlot.startTime() : currentSlot.startTime();
+                    LocalTime earliestEnd = commonSlot.endTime().isBefore(currentSlot.endTime()) ? commonSlot.endTime() : currentSlot.endTime();
+                    if (latestStart.isBefore(earliestEnd)) {
+                        newCommonSlots.add(new TimeSlot(latestStart, earliestEnd));
+                    }
                 }
+            }
+
+            commonSlots = newCommonSlots;
+            if (commonSlots.isEmpty()) {
+                break;
             }
         }
 
